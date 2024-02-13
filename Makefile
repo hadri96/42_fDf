@@ -8,9 +8,11 @@ MLX_A		=	$(addprefix $(MLX), libmlx.a)
 
 CC			=	gcc
 INCLUDE 	=	includes
-CFLAGS		=	-Wall -Wextra -Werror -I$(INCLUDE)
+CFLAGS		=	-Wall -Wextra -Werror -I$(INCLUDE) -Wno-deprecated
 RM			=	rm -f
-SRCS		=	srcs/trial.c
+SRCS		=	srcs/parse.c \
+                srcs/utils/memory.c \
+				srcs/utils/parse_utils.c
 
 OBJS		=	$(SRCS:%.c=%.o)
 
@@ -21,7 +23,7 @@ $(NAME):		$(OBJS) $(LIBFT_A) $(GNL_A) $(MLX_A)
 				@echo "Linked into executable \033[0;32mfdf\033[0m."
 
 $(LIBFT_A):
-				@$(MAKE) -s -C $(LIBFT)
+				@$(MAKE) bonus -s -C $(LIBFT)
 				@echo "Compiled $(LIBFT_A)."
 
 $(GNL_A):

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yourlogin <youremail@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/15 16:33:18 by yourlogin         #+#    #+#             */
-/*   Updated: 2024/01/15 16:38:01 by yourlogin        ###   ########.ch       */
+/*   Created: 2024/01/23 15:40:45 by yourlogin         #+#    #+#             */
+/*   Updated: 2024/01/23 16:32:34 by yourlogin        ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ void	pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
+	
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
-/* # include <stdlib.h>
+/*  # include <stdlib.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdint.h>
@@ -40,8 +41,8 @@ typedef struct s_point2D
 	double		x;
 	double		y;
 	bool	swapped;
-}	t_point2D; */
-
+}	t_point2D;
+ */
 double	compute_slope(t_point2D a, t_point2D b)
 {
 	double	slope;
@@ -132,16 +133,9 @@ unsigned int create_color(unsigned int line_color, double intensity)
 void	draw_midpoint(int x, double y, t_data img, unsigned int color)
 {
 	double	y_floor;
-	double	y_frac;
-	double 	intensity_high;
-	double	intensity_low;
 	
 	y_floor = floor(y);
-	y_frac = y - y_floor;
-	intensity_high = pow(y_frac, 1/2.2);
-	intensity_low = pow(1.0 - y_frac, 1/2.2);
-	pixel_put(&img, x, y_floor, create_color(color, intensity_high));
-	pixel_put(&img, x, y_floor + 1, create_color(color, intensity_low));
+	pixel_put(&img, x, y_floor, create_color(color, 1));
 }
 
 void	draw_line(t_data img, t_point2D a, t_point2D b)
@@ -194,26 +188,32 @@ int	main(void)
 {
 	void		*mlx;
 	void		*mlx_win;
-	t_data		img;
-	t_point2D	a;
-	t_point2D	b;
-	t_point2D	c;
+	t_data		img; 
+	// t_point2D	a;
+	// t_point2D	b;
+	// t_point2D	c;
 	t_point2D	d;
+	t_point2D	e;
+	// t_point2D	f;
+	// t_point2D	g;
 
-	a = init_point(500, 500);
-	b = init_point(620, 550);
-	c = init_point(300, 200);
-	d = init_point(800, 600);
-	
+	// a = init_point(500, 500);
+	// b = init_point(620, 720);
+	// c = init_point(300, 200);
+	d = init_point(640, 0);
+	e = init_point(-640, 0);
+	// f = init_point(720, 640);
+	// g = init_point(0, 640);
+	img.endian = 0;
 	mlx = mlx_init();
 	mlx_win = mlx_new_window(mlx, 1280, 720, "Hello world!");
 	img.img = mlx_new_image(mlx, 1280, 720);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, \
 &img.line_length, &img.endian);
-	draw_line(img, a, b);
-	draw_line(img, c, a);
-	draw_line(img, c, d);
-	
+	//draw_line(img, a, b);
+	draw_line(img, d, e);
+	//draw_line(img, c, a);
+	//draw_line(img, f, g);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }
