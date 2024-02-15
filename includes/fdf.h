@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmorand <hmorand@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/13 16:31:01 by hmorand           #+#    #+#             */
-/*   Updated: 2024/02/13 17:12:13 by hmorand          ###   ########.ch       */
+/*   Created: 2024/02/15 17:53:11 by hmorand           #+#    #+#             */
+/*   Updated: 2024/02/15 17:53:11 by hmorand          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 # include <stdint.h>
 # include <math.h>
 # include <mlx.h>
+# include <libft.h>
 
 # define WIDTH   400
 # define HEIGHT  400
 
-typedef struct	s_data
+typedef struct s_data
 {
 	void	*img;
 	char	*addr;
@@ -33,9 +34,9 @@ typedef struct	s_data
 
 typedef struct s_mlx_data
 {
-    void	*mlx_ptr;
-    void	*win_ptr;
-}   t_mlx_data;
+	void	*mlx_ptr;
+	void	*win_ptr;
+}	t_mlx_data;
 
 typedef struct s_point2D
 {
@@ -60,6 +61,10 @@ typedef struct s_map3D
 	t_point3D	limits;
 	bool		colors;
 } t_map3D;
+
+// parsing
+
+t_map3D			init_map(char *filename);
 
 // parse utils
 

@@ -8,11 +8,12 @@ MLX_A		=	$(addprefix $(MLX), libmlx.a)
 
 CC			=	gcc
 INCLUDE 	=	includes
-CFLAGS		=	-Wall -Wextra -Werror -I$(INCLUDE) -Wno-deprecated
+CFLAGS		=	-Wall -Wextra -Werror -I$(INCLUDE) -Wno-deprecated -g
 RM			=	rm -f
 SRCS		=	srcs/parse.c \
                 srcs/utils/memory.c \
-				srcs/utils/parse_utils.c
+				srcs/utils/parse_utils.c \
+				srcs/display.c
 
 OBJS		=	$(SRCS:%.c=%.o)
 

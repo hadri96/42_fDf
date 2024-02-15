@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   trial.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yourlogin <youremail@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: hmorand <hmorand@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 15:40:45 by yourlogin         #+#    #+#             */
-/*   Updated: 2024/01/23 16:32:34 by yourlogin        ###   ########.ch       */
+/*   Created: 2024/02/15 17:23:22 by hmorand           #+#    #+#             */
+/*   Updated: 2024/02/15 17:25:41 by hmorand          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <../includes/libft.h>
+#include <../includes/get_next_line.h>
 #include <../includes/fdf.h>
 #include <mlx.h>
 
@@ -18,7 +20,7 @@ void	pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	
+
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
@@ -26,7 +28,7 @@ void	pixel_put(t_data *data, int x, int y, int color)
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdint.h>
-# include <math.h> 
+# include <math.h>
 
 typedef struct s_data {
 	void	*img;
@@ -133,7 +135,7 @@ unsigned int create_color(unsigned int line_color, double intensity)
 void	draw_midpoint(int x, double y, t_data img, unsigned int color)
 {
 	double	y_floor;
-	
+
 	y_floor = floor(y);
 	pixel_put(&img, x, y_floor, create_color(color, 1));
 }
@@ -188,7 +190,7 @@ int	main(void)
 {
 	void		*mlx;
 	void		*mlx_win;
-	t_data		img; 
+	t_data		img;
 	// t_point2D	a;
 	// t_point2D	b;
 	// t_point2D	c;

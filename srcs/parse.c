@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmorand <hmorand@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/13 16:17:52 by hmorand           #+#    #+#             */
-/*   Updated: 2024/02/13 16:21:28 by hmorand          ###   ########.ch       */
+/*   Created: 2024/02/15 19:29:19 by hmorand           #+#    #+#             */
+/*   Updated: 2024/02/15 19:29:19 by hmorand          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ t_map3D	init_map(char *filename)
 	return (map);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	t_map3D	map;
 
@@ -119,4 +119,4 @@ int	main(void)
 		ft_putstr_fd("\n", 1);
 	}
 	free_map(&map);
-}
+}*/
