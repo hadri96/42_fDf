@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmorand <hmorand@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/13 16:07:38 by hmorand           #+#    #+#             */
-/*   Updated: 2024/02/13 16:07:38 by hmorand          ###   ########.ch       */
+/*   Created: 2024/02/15 20:38:11 by hmorand           #+#    #+#             */
+/*   Updated: 2024/02/15 20:38:16 by hmorand          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ t_list	*parse_lines(char *filepath)
 			return (NULL);
 		line = get_next_line(fd);
 	}
+	close(fd);
 	return (lines);
 }

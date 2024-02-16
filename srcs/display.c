@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmorand <hmorand@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/15 19:31:04 by hmorand           #+#    #+#             */
-/*   Updated: 2024/02/15 19:56:50 by hmorand          ###   ########.ch       */
+/*   Created: 2024/02/16 11:21:13 by hmorand           #+#    #+#             */
+/*   Updated: 2024/02/16 11:21:24 by hmorand          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ double compute_slope(t_point2D a, t_point2D b)
 {
 	double slope;
 
+	if (b.y == a.y && a.x > b.x)
+		return (INFINITY);
+	else if (b.y == a.y && a.x < b.x)
+		return (-INFINITY);
 	slope = (b.y - a.y) / (b.x - a.x);
 	return (slope);
 }
@@ -36,21 +40,29 @@ double compute_intersect(t_point2D a, double slope)
 {
 	double intersect;
 
+	if (slope == fabsf(INFINITY))
+		return (a.x);
 	intersect = a.y - (a.x * slope);
 	return (intersect);
 }
 
-double compute_y(int x, double slope, double intersect)
+double compute_y(int x, double slope, double intersect, double y)
 {
-	double y;
+	double new_y;
 
-	y = x * slope + intersect;
-	return (y);
+	if (slope == INFINITY)
+		return (y + 1);
+	else if (slope == -INFINITY)
+		return (y + 1);
+	new_y = x * slope + intersect;
+	return (new_y);
 }
 
 bool is_steep(double slope)
 {
-	if (slope > 0.5 || slope < -0.5)
+	if (slope == INFINITY || slope == -INFINITY)
+		return (false);
+	if (slope > 1 || slope < -1)
 		return (true);
 	return (false);
 }
@@ -116,7 +128,8 @@ void draw_midpoint(int x, double y, t_data img, unsigned int color)
 	double y_floor;
 
 	y_floor = floor(y);
-	pixel_put(&img, x, y_floor, create_color(color, 1));
+	pixel_put(&img, x, (int)y_floor, create_color(color, 1));
+	//printf("(%d, %d)", x, (int) y_floor);
 }
 
 void draw_line(t_data img, t_point2D a, t_point2D b)
@@ -131,26 +144,44 @@ void draw_line(t_data img, t_point2D a, t_point2D b)
 	prepare_points(&a, &b);
 	slope = compute_slope(a, b);
 	intersect = compute_intersect(a, slope);
+	printf("a: (%f, %f)\n", a.x, a.y);
+	printf("b: (%f, %f)\n", b.x, b.y);
+	printf("Swapped: %d\n", (int)a.swapped);
 	if (a.swapped)
 	{
 		x = a.y;
-		while (++x != b.y)
+		while ((int) ++x != (int) b.y)
 		{
-			y = compute_y(x, slope, intersect);
-			draw_midpoint(y, x, img, color);
+			y = compute_y(x, slope, intersect, a.x);
+			draw_midpoint(x, (int)y, img, color);
+		}
+	}
+	else if (slope == fabsf(INFINITY))
+	{
+		y = a.y;
+		x = a.x;
+		if (slope > 0)
+		{
+			while (++y < b.y)
+				draw_midpoint((int)x, y, img, color);
+		}
+		else
+		{
+			while (--y > b.y)
+				draw_midpoint((int)x, y, img, color);
 		}
 	}
 	else
 	{
 		x = a.x;
-		while (++x != b.x)
+		while ((int) ++x != (int)b.x)
 		{
-			y = compute_y(x, slope, intersect);
-			draw_midpoint(x, y, img, color);
+			y = compute_y(x, slope, intersect, a.y);
+			draw_midpoint((int) x, y, img, color);
 		}
 	}
-	//pixel_put(&img, a.x, a.y, color);
-	//pixel_put(&img, b.x, b.y, color);
+	pixel_put(&img, (int)a.x, (int) a.y, color);
+	pixel_put(&img, (int)b.x, (int) b.y, color);
 }
 
 int main(void)
@@ -162,22 +193,27 @@ int main(void)
 	t_point2D	b;
 	t_point2D	c;
 	t_point2D	d;
+	t_map3D		map;
 
-	a.x = 960 - 19 / 2 * 20;
-	a.y = 540 - 10 / 2 * 20;
-	b.x = 960 + 19 / 2 * 20;
-	b.y = 540 + 10 / 2 * 20;
-	c.x = 960 - 19 / 2 * 20;
-	c.y = 540 + 10 / 2 * 20;
-	d.x = 960 + 19 / 2 * 20;
-	d.y = 540 - 10 / 2 * 20;
+	map = init_map("test_maps/42.fdf");
+	a.x = 960 - map.limits.x * 20;
+	a.y = 540 - map.limits.y * 20;
+	b.x = 960 + map.limits.x * 20;
+	b.y = 540 + map.limits.y * 20;
+	c.x = 960 - map.limits.x * 20;
+	c.y = 540 + map.limits.y * 20;
+	d.x = 960 + map.limits.x * 20;
+	d.y = 540 - map.limits.y * 20;
 	mlx = mlx_init();
 	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
 	img.img = mlx_new_image(mlx, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, \
 &img.line_length, &img.endian);
 	draw_line(img, a, b);
-	//draw_line(img, b, d);
+	draw_line(img, a, c);
+	draw_line(img, a, d);
+	draw_line(img, d, b);
+	draw_line(img, c, b);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }
