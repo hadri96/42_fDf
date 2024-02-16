@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmorand <hmorand@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/15 20:38:23 by hmorand           #+#    #+#             */
-/*   Updated: 2024/02/15 20:38:23 by hmorand          ###   ########.ch       */
+/*   Created: 2024/02/16 11:29:55 by hmorand           #+#    #+#             */
+/*   Updated: 2024/02/16 11:30:26 by hmorand          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	map_basics(t_map3D *map, t_list *lines)
 	while (coordinates[++i + 1])
 		free(coordinates[i]);
 	map->limits.x = i + 1;
-	if (ft_strchr(coordinates[i], ','))
-		map->colors = true;
 	map->max_height = -1000000;
 	map->min_height = 1000000;
 	free(coordinates[i]);
@@ -42,7 +40,7 @@ t_point3D	parse_point(char *coordinates, t_map3D *map, int x, int y)
 	t_point3D	point;
 	char		**info;
 
-	if (map->colors)
+	if (ft_strchr(coordinates, ','))
 	{
 		info = ft_split(coordinates, ',');
 		point.z = ft_atoi(info[0]);

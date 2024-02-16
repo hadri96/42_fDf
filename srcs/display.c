@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmorand <hmorand@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/16 11:21:13 by hmorand           #+#    #+#             */
-/*   Updated: 2024/02/16 11:21:24 by hmorand          ###   ########.ch       */
+/*   Created: 2024/02/16 11:30:53 by hmorand           #+#    #+#             */
+/*   Updated: 2024/02/16 11:30:53 by hmorand          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,10 +150,10 @@ void draw_line(t_data img, t_point2D a, t_point2D b)
 	if (a.swapped)
 	{
 		x = a.y;
-		while ((int) ++x != (int) b.y)
+		while (++x != b.y)
 		{
 			y = compute_y(x, slope, intersect, a.x);
-			draw_midpoint(x, (int)y, img, color);
+			draw_midpoint(x, y, img, color);
 		}
 	}
 	else if (slope == fabsf(INFINITY))
@@ -163,25 +163,25 @@ void draw_line(t_data img, t_point2D a, t_point2D b)
 		if (slope > 0)
 		{
 			while (++y < b.y)
-				draw_midpoint((int)x, y, img, color);
+				draw_midpoint(x, y, img, color);
 		}
 		else
 		{
 			while (--y > b.y)
-				draw_midpoint((int)x, y, img, color);
+				draw_midpoint(x, y, img, color);
 		}
 	}
 	else
 	{
 		x = a.x;
-		while ((int) ++x != (int)b.x)
+		while (++x != b.x)
 		{
 			y = compute_y(x, slope, intersect, a.y);
-			draw_midpoint((int) x, y, img, color);
+			draw_midpoint( x, y, img, color);
 		}
 	}
-	pixel_put(&img, (int)a.x, (int) a.y, color);
-	pixel_put(&img, (int)b.x, (int) b.y, color);
+	pixel_put(&img, a.x, a.y, color);
+	pixel_put(&img, b.x, b.y, color);
 }
 
 int main(void)
@@ -195,7 +195,7 @@ int main(void)
 	t_point2D	d;
 	t_map3D		map;
 
-	map = init_map("test_maps/42.fdf");
+	map = init_map("test_maps/elem-col.fdf");
 	a.x = 960 - map.limits.x * 20;
 	a.y = 540 - map.limits.y * 20;
 	b.x = 960 + map.limits.x * 20;
@@ -214,6 +214,7 @@ int main(void)
 	draw_line(img, a, d);
 	draw_line(img, d, b);
 	draw_line(img, c, b);
+	draw_line(img, c, d);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }
