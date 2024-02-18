@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmorand <hmorand@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/16 11:29:55 by hmorand           #+#    #+#             */
-/*   Updated: 2024/02/16 11:30:26 by hmorand          ###   ########.ch       */
+/*   Created: 2024/02/18 15:24:13 by hmorand           #+#    #+#             */
+/*   Updated: 2024/02/18 15:25:17 by hmorand          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,9 @@ t_map3D	init_map(char *filename)
 
 	lines = parse_lines(filename);
 	if (!lines)
-		return ((t_map3D) {0,0,0,(t_point3D) {0,0,0,0},0});
+		return ((t_map3D) {0,0,0,0,(t_point3D) {0,0,0,0},0});
 	map_basics(&map, lines);
-	map.coordinates = init_coordinates(&map, lines);
+	map.coord_3d = init_coordinates(&map, lines);
 	free_lines(lines);
 	return (map);
 }
@@ -111,7 +111,7 @@ t_map3D	init_map(char *filename)
 	{
 		for (int i = 0; map.limits.x > i; i++)
 		{
-			ft_putnbr_fd(map.coordinates[j][i].z, 1);
+			ft_putnbr_fd(map.coord_3d[j][i].z, 1);
 			ft_putstr_fd(" ", 1);
 		}
 		ft_putstr_fd("\n", 1);
