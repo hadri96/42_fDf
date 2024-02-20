@@ -13,6 +13,12 @@ RM			=	rm -f
 SRCS		=	srcs/parse.c \
                 srcs/utils/memory.c \
 				srcs/utils/parse_utils.c \
+				srcs/utils/display_utils.c \
+				srcs/rotate_basic.c \
+				srcs/rotate_map.c \
+				srcs/transform.c \
+				srcs/translate.c \
+				srcs/zoom.c \
 				srcs/display.c
 
 OBJS		=	$(SRCS:%.c=%.o)
