@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmorand <hmorand@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 13:41:05 by hmorand           #+#    #+#             */
-/*   Updated: 2024/02/20 09:31:29 by hmorand          ###   ########.ch       */
+/*   Created: 2024/02/20 14:51:20 by hmorand           #+#    #+#             */
+/*   Updated: 2024/02/20 14:54:47 by hmorand          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,8 @@ int main(void)
 	int			i;
 	int			j;
 
-	map = init_map("test_maps/pylone.fdf", 1920 / 1080);
-	scale_z(&map, 0.3);
+	map = init_map("test_maps/pyramide.fdf", 1920 / 1080);
+	scale_z(&map, 1.2);
 	transform_iso(&map);
 	zoom_by(&map, 20);
 	center_map(&map);
