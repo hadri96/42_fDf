@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmorand <hmorand@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/18 15:22:13 by hmorand           #+#    #+#             */
-/*   Updated: 2024/02/18 15:22:13 by hmorand          ###   ########.ch       */
+/*   Created: 2024/02/19 12:06:26 by hmorand           #+#    #+#             */
+/*   Updated: 2024/02/19 12:07:03 by hmorand          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,6 @@ t_point3D	rotate_z(t_point3D point, double angle)
 	radians = M_PI * angle / 360;
 	point.x = point.x * cos(radians) - point.y * sin(radians);
 	point.y = point.x * sin(radians) + point.y * cos(radians);
-	return (point);
-}
-
-t_point3D	isometric_view(t_point3D point)
-{
-	point = rotate_x(point, 120);
-	point = rotate_y(point, 120);
-	point = rotate_z(point, 120);
 	return (point);
 }
 

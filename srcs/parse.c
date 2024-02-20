@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmorand <hmorand@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/18 15:24:13 by hmorand           #+#    #+#             */
-/*   Updated: 2024/02/18 15:25:17 by hmorand          ###   ########.ch       */
+/*   Created: 2024/02/20 10:54:11 by hmorand           #+#    #+#             */
+/*   Updated: 2024/02/20 11:05:17 by hmorand          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../includes/libft.h"
 #include "../includes/fdf.h"
 
-void	map_basics(t_map3D *map, t_list *lines)
+void	map_basics(t_map *map, t_list *lines)
 {
 	char	*first_line;
 	char	**coordinates;
@@ -35,7 +35,7 @@ void	map_basics(t_map3D *map, t_list *lines)
 	free(coordinates);
 }
 
-t_point3D	parse_point(char *coordinates, t_map3D *map, int x, int y)
+t_point3D	parse_point(char *coordinates, t_map *map, int x, int y)
 {
 	t_point3D	point;
 	char		**info;
@@ -57,7 +57,7 @@ t_point3D	parse_point(char *coordinates, t_map3D *map, int x, int y)
 	return (point);
 }
 
-t_point3D	**init_coordinates(t_map3D *map, t_list *lines)
+t_point3D	**init_coordinates(t_map *map, t_list *lines)
 {
 	t_point3D	**map_coordinates;
 	char		**coordinates;
@@ -85,26 +85,29 @@ t_point3D	**init_coordinates(t_map3D *map, t_list *lines)
 	return (map_coordinates);
 }
 
-t_map3D	init_map(char *filename)
+t_map	init_map(char *filename, double focal)
 {
-	t_map3D	map;
+	t_map	map;
 	t_list	*lines;
 
 	lines = parse_lines(filename);
 	if (!lines)
-		return ((t_map3D) {0,0,0,0,(t_point3D) {0,0,0,0},0});
+		return ((t_map){0, 0, 0, 0, (t_point3D){0, 0, 0, 0},
+						(t_point2D){0, 0, 0, 0},
+						(t_point2D){0, 0, 0, 0}, 0});
 	map_basics(&map, lines);
 	map.coord_3d = init_coordinates(&map, lines);
+	init_2d(&map, focal);
 	free_lines(lines);
 	return (map);
 }
 
-/* int	main(void)
+/*int	main(void)
 {
-	t_map3D	map;
+	t_map	map;
 
-	map = init_map("test_maps/42.fdf");
-	if (!map.coordinates)
+	map = init_map("test_maps/42.fdf", 5);
+	if (!map.coord_3d)
 		ft_putstr_fd("Error", 1);
 	printf("limits x: %f\nlimits y: %f\n", map.limits.x, map.limits.y);
 	for (int j = 0; map.limits.y > j; j++)

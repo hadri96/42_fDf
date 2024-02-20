@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate_map.c                                       :+:      :+:    :+:   */
+/*   translate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmorand <hmorand@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 12:09:36 by hmorand           #+#    #+#             */
-/*   Updated: 2024/02/19 12:09:36 by hmorand          ###   ########.ch       */
+/*   Created: 2024/02/18 18:40:24 by hmorand           #+#    #+#             */
+/*   Updated: 2024/02/18 18:40:45 by hmorand          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <../includes/fdf.h>
 
-void rotate_map_x(t_map *map, double angle)
+void	translate_map(t_map *map, double offset_x, double offset_y)
 {
 	int	i;
 	int	j;
@@ -22,35 +22,22 @@ void rotate_map_x(t_map *map, double angle)
 	{
 		i = -1;
 		while (++i < map->limits.x)
-			map->coord_3d[j][i] = rotate_x(map->coord_3d[j][i], angle);
+		{
+			map->coord_2d[j][i].x += offset_x;
+			map->coord_2d[j][i].y += offset_y;
+		}
 	}
 }
 
-void rotate_map_y(t_map *map, double angle)
+void	center_map(t_map *map)
 {
-	int	i;
-	int	j;
+	double	offset_x;
+	double	offset_y;
 
-	j = -1;
-	while (++j < map->limits.y)
-	{
-		i = -1;
-		while (++i < map->limits.x)
-			map->coord_3d[j][i] = rotate_x(map->coord_3d[j][i], angle);
-	}
+	offset_x = map->coord_2d[(int) \
+map->limits.y / 2][(int) map->limits.x / 2].x - 960;
+	offset_y = map->coord_2d[(int) \
+map->limits.y / 2][(int) map->limits.x / 2].y - 540;
+	translate_map(map, -offset_x, -offset_y);
+
 }
-
-void rotate_map_z(t_map *map, double angle)
-{
-	int	i;
-	int	j;
-
-	j = -1;
-	while (++j < map->limits.y)
-	{
-		i = -1;
-		while (++i < map->limits.x)
-			map->coord_3d[j][i] = rotate_x(map->coord_3d[j][i], angle);
-	}
-}
-
