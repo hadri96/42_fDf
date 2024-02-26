@@ -11,12 +11,12 @@
 
 @interface NSWindowEvent : NSWindow
 {
-  func_t	event_funct[MAX_EVENT];
-  void		*(event_param[MAX_EVENT]);
-  int		keyrepeat;
-  int		keyflag;
-  int		size_x;
-  int		size_y;
+	func_t	event_funct[MAX_EVENT];
+	void	*(event_param[MAX_EVENT]);
+	int		keyrepeat;
+	int		keyflag;
+	int		size_x;
+	int		size_y;
 }
 - (NSWindowEvent *) initWithContentRect:(NSRect)rect styleMask:(NSUInteger)winstyle backing:(NSBackingStoreType)bck defer:(BOOL) dfr;
 - (void) setEvent:(int)event andFunc:(func_t)func andParam:(void *)param;
