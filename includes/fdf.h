@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmorand <hmorand@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 10:51:49 by hmorand           #+#    #+#             */
-/*   Updated: 2024/02/20 10:51:49 by hmorand          ###   ########.ch       */
+/*   Created: 2024/02/25 17:45:45 by hmorand           #+#    #+#             */
+/*   Updated: 2024/02/25 17:45:45 by hmorand          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 # include <stdint.h>
 # include <math.h>
 # include <mlx.h>
-# include <libft.h>
+# include <fcntl.h>
+# include "keys.h"
+# include "libft.h"
 
 # define WIDTH   400
 # define HEIGHT  400
@@ -64,7 +66,15 @@ typedef struct s_map
 	t_point2D	max;
 	t_point2D	min;
 	bool		colors;
+	double		zoom;
 } t_map;
+
+typedef struct	s_fdf {
+	void	*mlx;
+	void	*win;
+	t_data	img;
+	t_map	map;
+}				t_fdf;
 
 // parsing
 
@@ -93,6 +103,7 @@ void			init_2d(t_map *map, double focal);
 void			transform_2d(t_map *map, double focal);
 t_point2D		isometric_view(t_point3D point);
 void			transform_iso(t_map *map);
+void			swap_xy_map(t_map *map);
 
 // translations
 
@@ -115,10 +126,37 @@ void			free_strarr(char **arr);
 
 // display utils
 
-double			compute_y(int x, double slope, double intersect, double y);
 bool			is_steep(double slope);
 bool			to_right(t_point2D a, t_point2D b);
 void			swap_xy(t_point2D *a);
 void			swap_points(t_point2D *a, t_point2D *b);
+unsigned int	create_color(unsigned int line_color, double intensity);
+// map computations
+
+double			compute_y(int x, double slope, double intersect, double y);
+double			compute_slope(t_point2D a, t_point2D b);
+double			compute_intersect(t_point2D a, double slope);
+void			prepare_points(t_point2D *a, t_point2D *b);
+
+// draw
+
+void			draw_midpoint(int x, double y, t_data img, unsigned int color);
+void			draw_line_yx(t_data img, t_point2D a, t_point2D b,
+					double slope);
+void			draw_line_xy(t_data img, t_point2D a, t_point2D b,
+					double slope);
+void			draw_line_vertical(t_data img, t_point2D a, t_point2D b,
+					double slope);
+void			draw_line(t_data img, t_point2D a, t_point2D b);
+
+// exceptions
+
+void			check_swap(t_map *map, char *name);
+void			correct_filename(char *name);
+void			adjust_map(t_map *map, char *name);
+
+// display
+
+void			pixel_put(t_data *data, int x, int y, int color);
 
 #endif

@@ -14,11 +14,14 @@ SRCS		=	srcs/parse.c \
                 srcs/utils/memory.c \
 				srcs/utils/parse_utils.c \
 				srcs/utils/display_utils.c \
+				srcs/utils/exception.c \
 				srcs/rotate_basic.c \
 				srcs/rotate_map.c \
 				srcs/transform.c \
 				srcs/translate.c \
 				srcs/zoom.c \
+				srcs/map_computation.c \
+				srcs/draw.c \
 				srcs/display.c
 
 OBJS		=	$(SRCS:%.c=%.o)
@@ -54,16 +57,12 @@ localclean:
 clean:			localclean
 				@$(MAKE) clean -s -C $(LIBFT)
 				@echo "Clean libft."
-				@$(MAKE) clean -s -C $(GNL)
-				@echo "Clean gnl."
 				@$(MAKE) clean -s -C $(MLX)
 				@echo "Clean mlx."
 
 fclean:			localclean
 				@$(MAKE) fclean -s -C $(LIBFT)
 				@echo "Full clean libft."
-				@$(MAKE) fclean -s -C $(GNL)
-				@echo "Full clean gnl."
 				@$(MAKE) clean -s -C $(MLX)
 				@echo "Clean mlx."
 				@$(RM) $(NAME)
