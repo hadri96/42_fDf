@@ -1,9 +1,7 @@
 NAME		=	fdf
 LIBFT		=	libft/
-GNL			=	get_next_line/
 MLX			=	minilibx_macos/
 LIBFT_A		=	$(addprefix $(LIBFT), libft.a)
-GNL_A		=	$(addprefix $(GNL), libgnl.a)
 MLX_A		=	$(addprefix $(MLX), libmlx.a)
 
 CC			=	gcc
@@ -29,16 +27,12 @@ OBJS		=	$(SRCS:%.c=%.o)
 all:			$(NAME)
 
 $(NAME):		$(OBJS) $(LIBFT_A) $(GNL_A) $(MLX_A)
-				@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -L$(GNL) -lgnl -L$(MLX) -lmlx -lm -o $(NAME) -framework OpenGL -framework AppKit
+				@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -L$(MLX) -lmlx -lm -o $(NAME) -framework OpenGL -framework AppKit
 				@echo "Linked into executable \033[0;32mfdf\033[0m."
 
 $(LIBFT_A):
 				@$(MAKE) bonus -s -C $(LIBFT)
 				@echo "Compiled $(LIBFT_A)."
-
-$(GNL_A):
-				@$(MAKE) -s -C $(GNL)
-				@echo "Compiled $(GNL_A)."
 
 $(MLX_A):
 				@$(MAKE) -s -C $(MLX)
